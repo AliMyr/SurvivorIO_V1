@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HealthComponent : IHealthComponent
 {
-    private float currentHealth;
+    private float currentHealth = 100;
     private float maxHealth = 100;
 
     public float CurrentHealth

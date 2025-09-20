@@ -6,7 +6,7 @@ public class AttackComponent : IAttackComponent
 
     public float Damage => 10;
     public float AttackRange => 3.0f;
-
+    
     public void Initialize(CharacterData characterData)
     {
         this.characterData = characterData;
