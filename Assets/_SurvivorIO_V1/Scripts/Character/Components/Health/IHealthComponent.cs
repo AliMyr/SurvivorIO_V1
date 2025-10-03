@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
-public interface IHealthComponent
+public interface IHealthComponent : ICharacterComponent
 {
+    public event Action<Character> OnCharacterDeath;
+
     public float CurrentHealth { get; }
     public float MaxHealth { get; }
 

@@ -1,9 +1,19 @@
+using System;
 using UnityEngine;
 
 public class HealthComponent : IHealthComponent
 {
+    private Character selfCharacter;
+
     private float currentHealth = 100;
     private float maxHealth = 100;
+
+    public event Action<Character> OnCharacterDeath;
+
+    public void Initialize(Character selfCharacter)
+    {
+        this.selfCharacter = selfCharacter;
+    }
 
     public float CurrentHealth
     {
@@ -29,6 +39,7 @@ public class HealthComponent : IHealthComponent
 
     private void Death()
     {
+        OnCharacterDeath?.Invoke(selfCharacter);
         Debug.LogError("I am death");
     }
 }

@@ -3,9 +3,13 @@ using UnityEngine;
 public class EnemyCharacter : Character
 {
     [SerializeField]
-    private Character characterTarget;
+    public override Character CharacterTarget => GameManager.Instance.CharacterFactory.Player;
     [SerializeField]
     private AiState aiState;
+
+    private float timeBetweenAttackCounter;
+
+    private CharacterData characterData;
 
     public override void Initialize()
     {
@@ -24,13 +28,25 @@ public class EnemyCharacter : Character
                 return;
 
             case AiState.MoveToTarget:
-                Vector3 moveDirection = characterTarget.transform.position - transform.position;
+                Vector3 moveDirection = CharacterTarget.transform.position - transform.position;
                 moveDirection.Normalize();
 
                 MovementComponent.Move(moveDirection);
                 MovementComponent.Rotation(moveDirection);
 
-                AttackComponent.MakeDamage(characterTarget);
+                /*
+                if (Vector3.Distance(CharacterTarget.transform.position, transform.position) > 3 && timeBetweenAttackCounter <= 0)
+                {
+                    AttackComponent.MakeDamage(CharacterTarget);
+                    timeBetweenAttackCounter = characterData.TimeBetweenAttacks;
+                }
+
+                if (timeBetweenAttackCounter > 0)
+                    timeBetweenAttackCounter -= Time.deltaTime;
+                
+                */
+
+                AttackComponent.MakeDamage(CharacterTarget);
 
                 return;
         }
