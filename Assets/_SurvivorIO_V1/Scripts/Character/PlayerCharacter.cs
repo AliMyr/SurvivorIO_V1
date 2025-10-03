@@ -12,8 +12,7 @@ public class PlayerCharacter : Character
             List<Character> list = GameManager.Instance.CharacterFactory.ActiveCharacters;
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].CharacterType == CharacterType.Player)
-                    continue;
+                if (list[i].CharacterType == CharacterType.Player) continue;
 
                 float distanceBetween = Vector3.Distance(list[i].transform.position, transform.position);
                 if (distanceBetween < minDistance)
@@ -31,12 +30,12 @@ public class PlayerCharacter : Character
     {
         base.Initialize();
         HealthComponent = new ImmortalHealthComponent();
+        HealthComponent.Initialize(this);
     }
 
     protected override void Update()
     {
-        if (HealthComponent.CurrentHealth <= 0)
-            return;
+        if (HealthComponent.CurrentHealth <= 0) return;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
@@ -49,7 +48,10 @@ public class PlayerCharacter : Character
         else
         {
             Vector3 rotationDirection = CharacterTarget.transform.position - transform.position;
-            MovementComponent.Rotation(moveDirection);
+            rotationDirection.y = 0;
+            rotationDirection.Normalize();
+
+            MovementComponent.Rotation(rotationDirection);
 
             if (Input.GetButtonDown("Jump"))
                 AttackComponent.MakeDamage(CharacterTarget);
