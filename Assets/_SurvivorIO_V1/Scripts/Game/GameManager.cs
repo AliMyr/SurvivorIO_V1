@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     {
         scoreSystem = new ScoreSystem();
         isGameActive = false;
+
+        windowsService.Initialize();
     }
 
     public void StartGame()
