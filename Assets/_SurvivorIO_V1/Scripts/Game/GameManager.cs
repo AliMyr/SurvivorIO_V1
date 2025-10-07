@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
 
         WindowsService.HideWindow<GameplayWindow>(true);
-        WindowsService.HideWindow<VictoryWindow>(false);
+        WindowsService.ShowWindow<VictoryWindow>(false);
     }
 
     private void GameOver()
@@ -140,6 +140,7 @@ public class GameManager : MonoBehaviour
         isGameActive = false;
 
         WindowsService.HideWindow<GameplayWindow>(true);
-        WindowsService.HideWindow<DefeatWindow>(false);
+        WindowsService.ShowWindow<DefeatWindow>(false);
     }
+
 }

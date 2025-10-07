@@ -29,7 +29,9 @@ public abstract class Window : MonoBehaviour
     public void Show(bool isImmediately)
     {
         OpenStart();
-        WindowAnimator.Play(isImmediately ? idleAnimationName : openAnimationName);
+
+        if (WindowAnimator != null && gameObject.activeInHierarchy)
+            WindowAnimator.Play(isImmediately ? idleAnimationName : openAnimationName);
 
         if (isImmediately)
             OpenEnd();
@@ -37,23 +39,31 @@ public abstract class Window : MonoBehaviour
 
     public void Hide(bool isImmediately)
     {
+        bool wasInactive = !gameObject.activeSelf;
+        if (wasInactive)
+            gameObject.SetActive(true);
+
         CloseStart();
-        WindowAnimator.Play(isImmediately ? hiddenAnimationName : closeAnimationName);
+
+        if (WindowAnimator != null && gameObject.activeInHierarchy)
+            WindowAnimator.Play(isImmediately ? hiddenAnimationName : closeAnimationName);
 
         if (isImmediately)
             CloseEnd();
+        else
+        {
+            if (wasInactive)
+                gameObject.SetActive(false);
+        }
     }
 
     protected virtual void OpenStart()
     {
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
         IsOpened = true;
     }
 
-    protected virtual void OpenEnd()
-    {
-
-    }
+    protected virtual void OpenEnd() { }
 
     protected virtual void CloseStart()
     {
@@ -62,6 +72,6 @@ public abstract class Window : MonoBehaviour
 
     protected virtual void CloseEnd()
     {
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
