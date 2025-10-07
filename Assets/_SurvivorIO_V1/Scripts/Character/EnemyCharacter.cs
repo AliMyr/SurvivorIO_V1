@@ -19,7 +19,7 @@ public class EnemyCharacter : Character
 
     protected override void Update()
     {
-        if (HealthComponent.CurrentHealth <= 0) return;
+        if (HealthComponent.CurrentHealth <= 0 || GameManager.Instance.IsGameActive) return;
         if (CharacterTarget == null) return;
 
         switch (aiState)

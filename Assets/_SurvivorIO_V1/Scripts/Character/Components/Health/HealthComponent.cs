@@ -9,6 +9,7 @@ public class HealthComponent : IHealthComponent
     private float maxHealth = 100;
 
     public event Action<Character> OnCharacterDeath;
+    public event Action<Character> OnCharacterHealthChange;
 
     public void Initialize(Character selfCharacter)
     {

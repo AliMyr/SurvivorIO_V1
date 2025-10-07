@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CharacterFactory characterFactory;
     [SerializeField] private GameData gameData;
 
+    [SerializeField] private WindowsService windowsService;
+
     private ScoreSystem scoreSystem;
 
     private float gameSessionTime;
@@ -13,7 +15,16 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
 
+    public float GameSessionTime => gameSessionTime;
+
     public CharacterFactory CharacterFactory => characterFactory;
+
+    public WindowsService WindowsService => windowsService;
+
+    public ScoreSystem ScoreSystem => scoreSystem;
+
+    public bool IsGameActive => isGameActive;
+
 
     private void Awake()
     {
@@ -115,6 +126,9 @@ public class GameManager : MonoBehaviour
         scoreSystem.EndGame();
         Debug.Log("Victory");
         isGameActive = false;
+
+        WindowsService.HideWindow<GameplayWindow>(true);
+        WindowsService.HideWindow<VictoryWindow>(false);
     }
 
     private void GameOver()
@@ -122,5 +136,8 @@ public class GameManager : MonoBehaviour
         scoreSystem.EndGame();
         Debug.Log("Defeat");
         isGameActive = false;
+
+        WindowsService.HideWindow<GameplayWindow>(true);
+        WindowsService.HideWindow<DefeatWindow>(false);
     }
 }

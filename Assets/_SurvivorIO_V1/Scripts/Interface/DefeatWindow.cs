@@ -1,16 +1,27 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class DefeatWindow : MonoBehaviour
+public class DefeatWindow : Window
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Button returnToMainMenuButton;
+
+    public override void Initialize()
     {
-        
+        restartButton.onClick.AddListener(OnRestartButtonClicked);
+        returnToMainMenuButton.onClick.AddListener(OnReturnToMainMenuButtonClicked);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnReturnToMainMenuButtonClicked()
     {
-        
+        Hide(true);
+        GameManager.Instance.WindowsService.ShowWindow<MainMenuWindow>(false);
+    }
+
+    public void OnRestartButtonClicked()
+    {
+        Hide(true);
+        GameManager.Instance.WindowsService.ShowWindow<GameplayWindow>(false);
+        GameManager.Instance.StartGame();
     }
 }

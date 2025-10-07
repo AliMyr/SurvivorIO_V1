@@ -7,6 +7,7 @@ public class ImmortalHealthComponent : IHealthComponent
     public float MaxHealth => 100;
 
     public event Action<Character> OnCharacterDeath;
+    public event Action<Character> OnCharacterHealthChange;
 
     public void Initialize(Character selfCharacter)
     {

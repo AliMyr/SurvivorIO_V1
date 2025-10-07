@@ -1,16 +1,28 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class VictoryWindow : MonoBehaviour
+public class VictoryWindow : Window
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Space][SerializeField] private Button continueButton;
+    [SerializeField] private TMP_Text recordText;
+    [SerializeField] private TMP_Text newRecordText;
+
+    public override void Initialize()
     {
-        
+        continueButton.onClick.AddListener(ContinueButtonClickHandler);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ContinueButtonClickHandler()
     {
-        
+        Hide(true);
+        GameManager.Instance.WindowsService.ShowWindow<MainMenuWindow>(false);
+    }
+
+    protected override void OpenStart()
+    {
+        base.OpenStart();
+        recordText.text = GameManager.Instance.ScoreSystem.Score.ToString();
+        newRecordText.gameObject.SetActive(GameManager.Instance.ScoreSystem.IsNewScoreRecord);
     }
 }
