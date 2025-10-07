@@ -35,7 +35,7 @@ public class PlayerCharacter : Character
 
     protected override void Update()
     {
-        if (HealthComponent.CurrentHealth <= 0 || GameManager.Instance.IsGameActive) return;
+        if (HealthComponent.CurrentHealth <= 0 || !GameManager.Instance.IsGameActive) return;
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
