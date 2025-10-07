@@ -7,12 +7,10 @@ public class GameData : ScriptableObject
     [SerializeField] private float timeBetweenEnemySpawn = 1.5f;
     [SerializeField] private float minSpawnOffset = 7;
     [SerializeField] private float maxSpawnOffset = 18;
-    //[SerializeField] private int scoreCost = 0;
 
     public int SessionTimeMinutes => sessionTimeMinutes;
     public int SessionTimeSeconds => sessionTimeMinutes * 60;
     public float TimeBetweenEnemySpawn => timeBetweenEnemySpawn;
     public float MinSpawnOffset => minSpawnOffset;
     public float MaxSpawnOffset => maxSpawnOffset;
-    //public int ScoreCost => scoreCost;
 }

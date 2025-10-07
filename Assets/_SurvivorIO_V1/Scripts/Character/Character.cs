@@ -6,7 +6,7 @@ public abstract class Character : MonoBehaviour
     [SerializeField] private CharacterData characterData;
 
     public virtual Character CharacterTarget { get; }
-    public CharacterType CharacterType => characterType; // characterType?
+    public CharacterType CharacterType => characterType;
     public CharacterData CharacterData => characterData;
 
     public IHealthComponent HealthComponent { get; protected set; }
