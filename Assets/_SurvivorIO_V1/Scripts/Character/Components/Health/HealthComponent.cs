@@ -36,6 +36,7 @@ public class HealthComponent : IHealthComponent
     public void TakeDamage(int damage)
     {
         CurrentHealth -= damage;
+        OnCharacterHealthChange?.Invoke(selfCharacter);
     }
 
     private void Death()
