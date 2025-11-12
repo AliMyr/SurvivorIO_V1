@@ -29,7 +29,7 @@ public class PlayerCharacter : Character
     public override void Initialize()
     {
         base.Initialize();
-        HealthComponent = new ImmortalHealthComponent();
+        HealthComponent = new HealthComponent();
         HealthComponent.Initialize(this);
     }
 
