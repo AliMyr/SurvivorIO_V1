@@ -8,8 +8,8 @@ public class MainMenuWindow : Window
 
     public override void Initialize()
     {
-        startGameButton.onClick.AddListener(StartGameHandler);
-        optionsGameButton.onClick.AddListener(OpenOptionsHandler);
+        startGameButton.onClick.AddListener(OnStartGameClicked);
+        optionsGameButton.onClick.AddListener(OnOptionsClicked);
     }
 
     protected override void OpenEnd()
@@ -26,14 +26,14 @@ public class MainMenuWindow : Window
         optionsGameButton.interactable = false;
     }
 
-    private void StartGameHandler()
+    private void OnStartGameClicked()
     {
         GameManager.Instance.StartGame();
         GameManager.Instance.WindowsService.ShowWindow<GameplayWindow>(true);
         Hide(false);
     }
 
-    private void OpenOptionsHandler()
+    private void OnOptionsClicked()
     {
         Hide(false);
         GameManager.Instance.WindowsService.ShowWindow<OptionsWindow>(false);

@@ -3,7 +3,6 @@ using UnityEngine;
 public abstract class Window : MonoBehaviour
 {
     [SerializeField] private string windowName;
-
     [Space(10)]
     [SerializeField] private Animator windowAnimator;
     [SerializeField] private string openAnimationName;
@@ -11,7 +10,7 @@ public abstract class Window : MonoBehaviour
     [SerializeField] private string closeAnimationName;
     [SerializeField] private string hiddenAnimationName;
 
-    public bool IsOpened { get; protected set; } = false;
+    public bool IsOpened { get; protected set; }
 
     protected Animator WindowAnimator
     {
@@ -19,7 +18,6 @@ public abstract class Window : MonoBehaviour
         {
             if (windowAnimator == null)
                 windowAnimator = GetComponent<Animator>();
-
             return windowAnimator;
         }
     }
@@ -31,29 +29,37 @@ public abstract class Window : MonoBehaviour
         OpenStart();
 
         if (WindowAnimator != null && gameObject.activeInHierarchy)
+        {
             WindowAnimator.Play(isImmediately ? idleAnimationName : openAnimationName);
+        }
 
         if (isImmediately)
+        {
             OpenEnd();
+        }
     }
 
     public void Hide(bool isImmediately)
     {
         bool wasInactive = !gameObject.activeSelf;
+
         if (wasInactive)
             gameObject.SetActive(true);
 
         CloseStart();
 
         if (WindowAnimator != null && gameObject.activeInHierarchy)
+        {
             WindowAnimator.Play(isImmediately ? hiddenAnimationName : closeAnimationName);
+        }
 
         if (isImmediately)
-            CloseEnd();
-        else
         {
-            if (wasInactive)
-                gameObject.SetActive(false);
+            CloseEnd();
+        }
+        else if (wasInactive)
+        {
+            gameObject.SetActive(false);
         }
     }
 

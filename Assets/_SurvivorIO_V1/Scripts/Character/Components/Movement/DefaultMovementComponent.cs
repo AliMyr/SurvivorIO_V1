@@ -4,8 +4,11 @@ public class DefaultMovementComponent : IMovementComponent
 {
     private CharacterData characterData;
     private float speed;
+    private float baseSpeed;
     private float turnSmoothVelocity;
+
     private const float TURN_SMOOTH_TIME = 0.1f;
+    private const float SPRINT_MULTIPLIER = 1.5f;
 
     public float Speed
     {
@@ -18,16 +21,15 @@ public class DefaultMovementComponent : IMovementComponent
     public void Initialize(CharacterData characterData)
     {
         this.characterData = characterData;
-        Speed = characterData.DefaultSpeed;
+        baseSpeed = characterData.DefaultSpeed;
+        Speed = baseSpeed;
     }
 
     public void Move(Vector3 direction)
     {
         if (direction == Vector3.zero) return;
 
-        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        Vector3 movement = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
-        characterData.CharacterController.Move(movement * Speed * Time.deltaTime);
+        characterData.CharacterController.Move(direction * Speed * Time.deltaTime);
     }
 
     public void Rotation(Vector3 direction)
@@ -35,7 +37,17 @@ public class DefaultMovementComponent : IMovementComponent
         if (direction == Vector3.zero) return;
 
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-        float angle = Mathf.SmoothDampAngle(characterData.CharacterTransform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, TURN_SMOOTH_TIME);
+        float angle = Mathf.SmoothDampAngle(
+            characterData.CharacterTransform.eulerAngles.y,
+            targetAngle,
+            ref turnSmoothVelocity,
+            TURN_SMOOTH_TIME
+        );
         characterData.CharacterTransform.rotation = Quaternion.Euler(0, angle, 0);
+    }
+
+    public void SetSprintSpeed(bool isSprinting)
+    {
+        Speed = isSprinting ? baseSpeed * SPRINT_MULTIPLIER : baseSpeed;
     }
 }

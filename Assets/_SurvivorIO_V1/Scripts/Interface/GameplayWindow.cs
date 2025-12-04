@@ -6,22 +6,21 @@ public class GameplayWindow : Window
 {
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private Slider healthSlider;
-
-    [Space][SerializeField] private Slider experienceSlider;
-
-    [Space][SerializeField] private TMP_Text timerText;
+    [Space]
+    [SerializeField] private Slider experienceSlider;
+    [Space]
+    [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text coinsText;
 
     public override void Initialize()
     {
-
     }
 
     protected override void OpenStart()
     {
         base.OpenStart();
-        var player = GameManager.Instance.CharacterFactory.Player;
 
+        var player = GameManager.Instance.CharacterFactory.Player;
         UpdateHealthVisual(player);
         player.HealthComponent.OnCharacterHealthChange += UpdateHealthVisual;
 
@@ -34,8 +33,7 @@ public class GameplayWindow : Window
         base.CloseStart();
 
         var player = GameManager.Instance.CharacterFactory.Player;
-        if (player == null)
-            return;
+        if (player == null) return;
 
         player.HealthComponent.OnCharacterHealthChange -= UpdateHealthVisual;
         GameManager.Instance.ScoreSystem.OnScoreUpdated -= UpdateScore;
@@ -46,7 +44,7 @@ public class GameplayWindow : Window
         int health = (int)character.HealthComponent.CurrentHealth;
         int maxHealth = (int)character.HealthComponent.MaxHealth;
 
-        healthText.text = health + "/" + maxHealth;
+        healthText.text = $"{health}/{maxHealth}";
         healthSlider.maxValue = maxHealth;
         healthSlider.value = health;
     }
@@ -61,8 +59,7 @@ public class GameplayWindow : Window
         float gameSeconds = GameManager.Instance.GameSessionTime;
         int minutes = (int)(gameSeconds / 60);
         int seconds = (int)(gameSeconds % 60);
-        string zero = "0";
 
-        timerText.text = minutes + ":" + ((seconds < 10) ? zero : "") + seconds;
+        timerText.text = $"{minutes}:{seconds:D2}";
     }
 }

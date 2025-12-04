@@ -1,13 +1,12 @@
 using System;
-using UnityEngine;
 
 public interface IHealthComponent : ICharacterComponent
 {
-    public event Action<Character> OnCharacterHealthChange;
-    public event Action<Character> OnCharacterDeath;
+    event Action<Character> OnCharacterHealthChange;
+    event Action<Character> OnCharacterDeath;
 
-    public float CurrentHealth { get; }
-    public float MaxHealth { get; }
+    float CurrentHealth { get; }
+    float MaxHealth { get; }
 
-    public void TakeDamage(int damage);
+    void TakeDamage(int damage);
 }

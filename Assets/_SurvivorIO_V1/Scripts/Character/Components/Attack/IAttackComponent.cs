@@ -1,8 +1,8 @@
 public interface IAttackComponent
 {
-    public float Damage { get; }
-    public float AttackRange { get; }
+    float Damage { get; }
+    float AttackRange { get; }
 
-    public void Initialize(CharacterData characterData);
-    public void MakeDamage(Character attackTarget);
+    void Initialize(CharacterData characterData);
+    void MakeDamage(Character attackTarget);
 }

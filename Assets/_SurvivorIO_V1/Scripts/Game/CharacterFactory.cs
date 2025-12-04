@@ -6,26 +6,22 @@ public class CharacterFactory : MonoBehaviour
     [SerializeField] private Character playerCharacterPrefab;
     [SerializeField] private Character enemyCharacterPrefab;
 
-    private Dictionary<CharacterType, Queue<Character>> disabledCharacters = new Dictionary<CharacterType, Queue<Character>>();
-
-    private List<Character> activeCharacters = new List<Character>();
+    private readonly Dictionary<CharacterType, Queue<Character>> disabledCharacters =
+        new Dictionary<CharacterType, Queue<Character>>();
+    private readonly List<Character> activeCharacters = new List<Character>();
 
     public List<Character> ActiveCharacters => activeCharacters;
-
-    public Character Player
-    {
-        get;
-        private set;
-    }
+    public Character Player { get; private set; }
 
     public Character GetCharacter(CharacterType type)
     {
         Character character = null;
-        if (disabledCharacters.ContainsKey(type))
+
+        if (disabledCharacters.TryGetValue(type, out Queue<Character> queue))
         {
-            if (disabledCharacters[type].Count > 0)
+            if (queue.Count > 0)
             {
-                character = disabledCharacters[type].Dequeue();
+                character = queue.Dequeue();
             }
         }
         else
@@ -44,28 +40,30 @@ public class CharacterFactory : MonoBehaviour
 
     public void ReturnCharacter(Character character)
     {
-        Queue<Character> characters = disabledCharacters[character.CharacterType];
-        characters.Enqueue(character);
-
+        if (disabledCharacters.TryGetValue(character.CharacterType, out Queue<Character> queue))
+        {
+            queue.Enqueue(character);
+        }
         activeCharacters.Remove(character);
     }
 
     private Character InstantiateCharacter(CharacterType type)
     {
         Character character = null;
+
         switch (type)
         {
             case CharacterType.Player:
-                character = GameObject.Instantiate(playerCharacterPrefab, null);
+                character = Instantiate(playerCharacterPrefab);
                 Player = character;
                 break;
 
             case CharacterType.DefaultEnemy:
-                character = GameObject.Instantiate(enemyCharacterPrefab, null);
+                character = Instantiate(enemyCharacterPrefab);
                 break;
 
             default:
-                Debug.LogError("Unknown character type: " + type);
+                Debug.LogError($"Unknown character type: {type}");
                 break;
         }
 

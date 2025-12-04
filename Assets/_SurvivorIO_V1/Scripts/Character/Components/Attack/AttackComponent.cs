@@ -4,8 +4,11 @@ public class AttackComponent : IAttackComponent
 {
     private CharacterData characterData;
 
-    public float Damage => 10;
-    public float AttackRange => 3.0f;
+    private const float DEFAULT_DAMAGE = 10f;
+    private const float DEFAULT_ATTACK_RANGE = 3.0f;
+
+    public float Damage => DEFAULT_DAMAGE;
+    public float AttackRange => DEFAULT_ATTACK_RANGE;
 
     public void Initialize(CharacterData characterData)
     {
@@ -16,7 +19,12 @@ public class AttackComponent : IAttackComponent
     {
         if (attackTarget == null) return;
 
-        if (Vector3.Distance(characterData.CharacterTransform.position, attackTarget.transform.position) <= AttackRange)
+        float distance = Vector3.Distance(
+            characterData.CharacterTransform.position,
+            attackTarget.transform.position
+        );
+
+        if (distance <= AttackRange)
         {
             attackTarget.HealthComponent.TakeDamage((int)Damage);
         }

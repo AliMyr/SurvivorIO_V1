@@ -8,17 +8,17 @@ public class DefeatWindow : Window
 
     public override void Initialize()
     {
-        restartButton.onClick.AddListener(OnRestartButtonClicked);
-        returnToMainMenuButton.onClick.AddListener(OnReturnToMainMenuButtonClicked);
+        restartButton.onClick.AddListener(OnRestartClicked);
+        returnToMainMenuButton.onClick.AddListener(OnReturnToMainMenuClicked);
     }
 
-    public void OnReturnToMainMenuButtonClicked()
+    private void OnReturnToMainMenuClicked()
     {
         Hide(true);
         GameManager.Instance.WindowsService.ShowWindow<MainMenuWindow>(false);
     }
 
-    public void OnRestartButtonClicked()
+    private void OnRestartClicked()
     {
         Hide(true);
         GameManager.Instance.WindowsService.ShowWindow<GameplayWindow>(false);
